@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Danmaku.js演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper" style="font-size: 20px; width: 100%; height:100%;"></div>
+    <script src="Danmaku.js"></script>
+    <script>
+        // 新建画板
+        var danmakuPainter = new DanmakuPainter(document.getElementById('wrapper'));
+        // 窗口调整大小的时候调整大小
+        (window.onresize = function () {
+            document.body.style.height = window.innerHeight + 'px';
+            danmakuPainter.resize.bind(danmakuPainter)();
+        })();
+
+        // 新建div
+        var div = document.createElement('div');
+        // 设置文字
+        div.textContent = 'Hello world!';
+        // 设置文字颜色
+        div.style.color = 'blue';
+        // 新建顶端的（代码为1）时长为5秒弹幕并立即发射
+        danmakuPainter.launch(new Danmaku(div, 1, 5), 0);
+
+        // 再来一个底端的（代码为1）时长为10秒弹幕并立即发射
+        var div = document.createElement('div');
+        div.style.fontSize = '2em';
+        div.textContent = 'This is Danmaku.js';
+        div.style.color = 'green';
+        danmakuPainter.launch(new Danmaku(div, 2, 10), 0);
+
+        // 再来一个普通的（代码为0）时长为5秒弹幕并延时0.3*i秒发射
+        for (var i = 1; i <= 10; ++i) {
+            var div = document.createElement('div');
+            div.textContent = 'LICENSE: Apache 2.0';
+            div.style.color = 'red';
+            danmakuPainter.launch(new Danmaku(div, 0, 5), 0.3 * i);
+        }
+
+        // 只要被div包围即可，内容可以是任何类型，这里是一个图片加一个文字
+        var div = document.createElement('div');
+        div.innerHTML = "<img style=\"height: 5em; vertical-align: middle;\" src=\"data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'&gt;&lt;path style='fill:#008aff;fill-rule:evenodd;stroke:#000000;stroke-width:2px' d='m 335.24438,279.41304 c 1.35861,-19.06793 1.16673,-38.59493 -0.50508,-57.32615 -20.07524,47.54707 -38.17218,61.68159 -60.48289,79.67577 22.77001,-5.64032 42.19528,-14.3892 60.98797,-22.34962 z M 76.519056,90.640783 c -9.513561,37.260037 -8.546665,42.890377 -9.59645,53.790627 l 0.682377,-0.70118 C 85.232485,112.45057 107.79184,94.515934 131.06729,78.518952 112.07479,81.480511 93.116932,85.667329 76.519056,90.640783 Z M 209.60665,202.0101 l -13.63706,-29.54696 75.5089,-5.80838 c 0,0 -2.67328,-23.19474 -23.63537,-37.06472 -13.61728,-9.01015 -31.31977,-15.59402 -61.50311,-5.98413 -19.0993,6.08091 -46.50029,28.3777 -53.18412,53.68553 -8.36264,31.66454 8.06317,55.3447 21.39746,64.61969 30.25631,21.04553 73.23605,3.03045 73.23605,3.03045 l 12.37437,26.76905 c 0,0 -70.98531,40.11994 -122.481,-13.8896 -27.091775,-28.4143 -21.647389,-75.08964 -8.85964,-99.27344 33.45779,-63.274353 95.76928,-72.743338 131.0881,-63.613659 62.48533,16.152039 63.89215,63.892149 61.36677,99.247489 z M 42.5,63.928572 C 340.53046,-27.795867 392.85715,150.25997 375,306.42857 135.93837,438.36222 -50.4438,298.89268 42.5,63.928572 Z'/&gt;&lt;/svg&gt;\"><span style=\"color: #999; font-size: 5em; vertical-align: middle;\">eeyes.net</span> by Ganlv";
+        danmakuPainter.launch(new Danmaku(div, 0, 5), 0);
+    </script>
+</body>
+</html>
